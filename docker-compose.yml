@@ -1,0 +1,17 @@
+services:
+  crowdcast:
+    build: .
+    restart: unless-stopped
+    environment:
+      PORT: "3000"
+      # Containers can't see the host's Wi-Fi IP. Set it so the QR code encodes a reachable URL:
+      #   PUBLIC_BASE_URL: http://192.168.1.20:3000
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-}
+      MAX_ATTENDEES: ${MAX_ATTENDEES:-300}
+    ports:
+      - "3000:3000"
+    volumes:
+      - data:/app/data
+
+volumes:
+  data:
